@@ -32,7 +32,7 @@ namespace BusinessLogic.Services
         /// </summary>
         /// <param name="postRequest">The updated post request data.</param>
         /// <returns>A <see cref="PostResponse"/> with updated post details.</returns>
-        PostResponse UpdatePost(PostResponse postResponse);
+        PostResponse UpdatePost(UpdatePostDto updatePostDto);
 
         /// <summary>
         /// Deletes a post by its unique identifier.

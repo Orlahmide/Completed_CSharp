@@ -103,27 +103,33 @@ namespace BusinessLogic.Services
             };
         }
 
-        public PostResponse UpdatePost(PostResponse postResponse)
+        public PostResponse UpdatePost(UpdatePostDto updatePostDto)
         {
-            if (string.IsNullOrWhiteSpace(postResponse.Title) || string.IsNullOrWhiteSpace(postResponse.Content))
+            if (string.IsNullOrWhiteSpace(updatePostDto.Title) || string.IsNullOrWhiteSpace(updatePostDto.Content))
             {
                 throw new ArgumentException("Title and content are required.");
             }
 
-            var existingPost = _unitOfWork.Posts.GetById(postResponse.Id);
+            var existingPost = _unitOfWork.Posts.GetById(updatePostDto.Id);
             if (existingPost == null)
             {
                 throw new KeyNotFoundException("Post not found.");
             }
 
-            existingPost.Title = postResponse.Title;
-            existingPost.Content = postResponse.Content;
+            existingPost.Title = updatePostDto.Title;
+            existingPost.Content = updatePostDto.Content;
             existingPost.UpdatedAt = DateTime.UtcNow;
 
             _unitOfWork.Posts.Update(existingPost);
             _unitOfWork.Save();
 
-            return _mapper.Map<PostResponse>(existingPost);
+            return new PostResponse
+            {
+                Id = existingPost.Id,
+                Title = existingPost.Title,
+                Content = existingPost.Content,
+                UpdatedAt = existingPost.UpdatedAt
+            };
         }
 
         public void DeletePost(int id)

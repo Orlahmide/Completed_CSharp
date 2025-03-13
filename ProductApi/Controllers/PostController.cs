@@ -56,12 +56,12 @@ namespace PresentationLayer.Controllers
         }
 
         // Update an existing post
-        [HttpPut("update/{id}")]
-        public ActionResult UpdatePost([FromBody] PostResponse post)
+        [HttpPut("update")]
+        public ActionResult UpdatePost([FromBody] UpdatePostDto updatePostDto)
         {
             try
             {
-                var response = _postService.UpdatePost(post);
+                var response = _postService.UpdatePost(updatePostDto);
                 return Ok(response);
             }
             catch (Exception ex)
